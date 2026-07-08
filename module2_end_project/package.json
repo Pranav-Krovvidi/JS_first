@@ -1,0 +1,19 @@
+{
+  "name": "module2_end_project",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "inter.js",
+  "scripts": {
+    "build": "webpack",
+    "serve": "http-server -p 8080",
+    "start": "npm run serve"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "webpack": "^5.108.3",
+    "webpack-cli": "^7.1.0"
+  }
+}

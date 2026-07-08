@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foodie Hub - Online Food Ordering</title>
+
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="navbar navbar-dark navbar-expand-md topbar">
+    <div class="container">
+      <span class="navbar-brand mb-0 brand"><span class="dot"></span>Foodie Hub</span>
+
+      <div class="d-flex gap-2 flex-wrap align-items-center">
+        <button class="btn btn-sm nav-btn active" onclick="showPage('menu-page', this)">Menu</button>
+        <button class="btn btn-sm nav-btn" onclick="showPage('orders-page', this)">My Orders</button>
+        <button class="btn btn-sm nav-btn" onclick="showPage('profile-page', this)">Profile</button>
+        <button class="btn btn-sm nav-btn" onclick="showPage('admin-page', this)">Admin</button>
+        <span class="cart-indicator ms-2">
+           <span id="cart-count">0</span>
+        </span>
+      </div>
+    </div>
+  </nav>
+
+
+  <div id="menu-page" class="page">
+
+    <div class="hero">
+      <div class="container">
+        <div class="eyebrow">No. 1 — Today's Board</div>
+        <h1>Slow fire,<br><em>fast delivery.</em></h1>
+        <p class="lead-custom">Hand-picked plates from the Foodie Hub line — order in a few taps, track it from kitchen to doorstep.</p>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="row mb-3 mt-4">
+        <div class="col-md-8">
+          <input
+            type="text"
+            id="search-box"
+            class="form-control"
+            placeholder="Search for food..."
+            onkeyup="displayMenu()"
+          >
+        </div>
+      </div>
+
+      <div class="cat-tabs mb-4" id="category-buttons"></div>
+
+      <div class="row">
+
+        <div class="col-md-8">
+          <h3 class="section-title">Menu</h3>
+          <div id="menu-list" class="row g-3"></div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="ticket">
+            <div class="ticket-head"><h6>Order Ticket</h6></div>
+            <ul id="cart-list" class="ticket-items">
+              <li class="empty-ticket-msg">Your cart is empty</li>
+            </ul>
+
+            <div class="ticket-total">
+              <div class="row-line"><span>Subtotal</span><span>₹<span id="cart-subtotal">0</span></span></div>
+              <div class="row-line"><span>Delivery Fee</span><span>₹<span id="cart-delivery">0</span></span></div>
+              <div class="row-line grand"><span>Total</span><span>₹<span id="cart-total">0</span></span></div>
+
+              <button
+                class="btn-checkout"
+                data-bs-toggle="modal"
+                data-bs-target="#checkoutModal"
+                onclick="openCheckout()"
+              >
+                Proceed to Checkout
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div id="orders-page" class="page d-none">
+    <div class="container my-4">
+      <h2>My Orders</h2>
+      <p class="text-muted">Track the status of everything you've ordered.</p>
+
+      <div class="table-responsive">
+        <table class="table table-bordered align-middle bg-white">
+          <thead class="table-dark">
+            <tr>
+              <th>Order #</th>
+              <th>Items</th>
+              <th>Total</th>
+              <th>Payment</th>
+              <th>Status</th>
+              <th>Placed On</th>
+            </tr>
+          </thead>
+          <tbody id="my-orders-body">
+            <tr><td colspan="6" class="text-center text-muted">No orders placed yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="profile-page" class="page d-none">
+    <div class="container my-4" style="max-width:500px;">
+      <h2>My Profile</h2>
+      <div class="card">
+        <div class="card-body">
+          <form id="profile-form" onsubmit="saveProfile(event)">
+            <div class="mb-3">
+              <label class="form-label">Full Name</label>
+              <input type="text" class="form-control" id="profile-name" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Phone Number</label>
+              <input type="tel" class="form-control" id="profile-phone">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" id="profile-email">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Default Delivery Address</label>
+              <textarea class="form-control" id="profile-address" rows="2"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Save Profile</button>
+          </form>
+          <p class="text-success mt-2 d-none" id="profile-saved-msg">Profile saved!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="admin-page" class="page d-none">
+    <div class="container my-4">
+      <h2>Admin Dashboard</h2>
+      <p class="text-muted">Manage the menu and track all customer orders.</p>
+
+      <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3">
+          <div class="stat-box">
+            <h4 id="stat-total-orders">0</h4>
+            <p>Total Orders</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-box">
+            <h4 id="stat-revenue">₹0</h4>
+            <p>Revenue</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-box">
+            <h4 id="stat-pending">0</h4>
+            <p>Pending Orders</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-box">
+            <h4 id="stat-menu-items">0</h4>
+            <p>Menu Items</p>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="mb-3">
+        <button class="btn btn-dark btn-sm admin-tab active" onclick="showAdminTab('admin-orders-tab', this)">Manage Orders</button>
+        <button class="btn btn-outline-dark btn-sm admin-tab" onclick="showAdminTab('admin-menu-tab', this)">Manage Menu</button>
+      </div>
+
+
+      <div id="admin-orders-tab" class="admin-tab-content">
+        <div class="table-responsive">
+          <table class="table table-bordered align-middle bg-white">
+            <thead class="table-dark">
+              <tr>
+                <th>Order #</th>
+                <th>Customer</th>
+                <th>Items</th>
+                <th>Total</th>
+                <th>Update Status</th>
+              </tr>
+            </thead>
+            <tbody id="admin-orders-body">
+              <tr><td colspan="5" class="text-center text-muted">No orders yet.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="admin-menu-tab" class="admin-tab-content d-none">
+
+        <button class="btn btn-primary btn-sm mb-3" data-bs-toggle="modal" data-bs-target="#menuItemModal" onclick="openAddItemForm()">
+          + Add New Item
+        </button>
+
+        <div class="table-responsive">
+          <table class="table table-bordered align-middle bg-white">
+            <thead class="table-dark">
+              <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-menu-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="modal fade" id="checkoutModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Checkout</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="checkout-form" onsubmit="placeOrder(event)">
+
+            <div class="mb-3">
+              <label class="form-label">Full Name</label>
+              <input type="text" class="form-control" id="customer-name" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Phone Number</label>
+              <input type="tel" class="form-control" id="customer-phone" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Delivery Address</label>
+              <textarea class="form-control" id="customer-address" rows="2" required></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Payment Method</label>
+              <select class="form-select" id="payment-method">
+                <option value="Cash on Delivery">Cash on Delivery</option>
+                <option value="UPI">UPI</option>
+                <option value="Card">Credit / Debit Card</option>
+              </select>
+            </div>
+
+            <p class="fw-bold">Order Total: ₹<span id="modal-total">0</span></p>
+
+            <button type="submit" class="btn btn-success w-100">Confirm Order</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="successModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content text-center">
+        <div class="modal-body p-4">
+          <h2>✅</h2>
+          <h4>Order Placed Successfully!</h4>
+          <p id="order-summary-text" class="text-muted"></p>
+          <button type="button" class="btn btn-primary mt-2" data-bs-dismiss="modal">
+            Continue Browsing
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="menuItemModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="menu-item-modal-title">Add Menu Item</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="menu-item-form" onsubmit="saveMenuItem(event)">
+            <input type="hidden" id="item-id">
+
+            <div class="mb-3">
+              <label class="form-label">Item Name</label>
+              <input type="text" class="form-control" id="item-name" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Category</label>
+              <input type="text" class="form-control" id="item-category" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Price (₹)</label>
+              <input type="number" min="1" class="form-control" id="item-price" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Image URL</label>
+              <input type="text" class="form-control" id="item-image" placeholder="https://...">
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Save Item</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <footer class="bg-dark text-white text-center py-3 mt-5">
+    <p class="mb-0">Foodie Hub | Course-end Project 1</p>
+  </footer>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,349 @@
+:root {
+  --ink: #1B1B1E;
+  --cream: #FFF8EE;
+  --paper: #FFFDF8;
+  --chili: #E0572B;
+  --chili-dark: #B83F1B;
+  --herb: #4B6043;
+  --turmeric: #F2B544;
+  --line: rgba(27, 27, 30, 0.12);
+}
+
+body {
+  background-color: var(--cream);
+  color: var(--ink);
+  font-family: 'Work Sans', sans-serif;
+}
+
+h1, h2, h3, h4, h5, .section-title {
+  font-family: 'Fraunces', serif;
+}
+
+.page {
+  min-height: 70vh;
+}
+
+.topbar {
+  background-color: var(--ink);
+  border-bottom: 3px solid var(--chili);
+  padding: 14px 0;
+}
+
+.brand {
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--cream) !important;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--chili);
+  display: inline-block;
+}
+
+.nav-btn {
+  color: rgba(255, 248, 238, 0.8);
+  background-color: transparent;
+  border: none;
+  border-radius: 999px;
+  font-weight: 500;
+  padding: 6px 14px;
+}
+
+.nav-btn:hover {
+  background-color: rgba(255, 248, 238, 0.12);
+  color: white;
+}
+
+.nav-btn.active {
+  background-color: var(--turmeric);
+  color: var(--ink);
+}
+
+.cart-indicator {
+  color: var(--cream);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+}
+
+.hero {
+  background: radial-gradient(ellipse at 75% 20%, rgba(242, 181, 68, 0.35), transparent 55%), var(--cream);
+  padding: 56px 0 32px;
+  border-bottom: 1px solid var(--line);
+}
+
+.hero .eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.78rem;
+  color: var(--chili-dark);
+  font-weight: 700;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.05;
+  margin: 10px 0 16px;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--chili);
+}
+
+.hero .lead-custom {
+  font-size: 1.05rem;
+  max-width: 480px;
+  color: #41413f;
+}
+
+.section-title {
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+#category-buttons button,
+.cat-tab {
+  border: 1.5px solid var(--ink) !important;
+  background-color: transparent !important;
+  color: var(--ink) !important;
+  border-radius: 999px !important;
+  padding: 6px 16px !important;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+#category-buttons button:hover {
+  background-color: rgba(27, 27, 30, 0.06) !important;
+}
+
+#category-buttons button.btn-dark {
+  background-color: var(--ink) !important;
+  color: var(--cream) !important;
+}
+
+.menu-card {
+  background-color: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  height: 100%;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.menu-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px rgba(27, 27, 30, 0.1);
+}
+
+.menu-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+}
+
+.menu-card-body {
+  padding: 14px 16px;
+}
+
+.menu-card h5 {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-bottom: 2px;
+}
+
+.menu-card .category-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--chili-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+
+.price {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 1.05rem;
+}
+
+.menu-card .btn-primary {
+  background-color: var(--ink);
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.menu-card .btn-primary:hover {
+  background-color: var(--chili);
+}
+
+.ticket {
+  background-color: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  position: sticky;
+  top: 90px;
+}
+
+.ticket-head {
+  padding: 16px 18px 12px;
+  border-bottom: 1.5px dashed var(--line);
+}
+
+.ticket-head h6 {
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.ticket-items {
+  list-style: none;
+  margin: 0;
+  padding: 10px 18px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.ticket-items li {
+  font-size: 0.82rem;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.ticket-items li:last-child {
+  border-bottom: none;
+}
+
+.empty-ticket-msg {
+  color: #8a8a85;
+  text-align: center;
+  padding: 20px 0 !important;
+  border-bottom: none !important;
+}
+
+.ticket-total {
+  padding: 12px 18px 18px;
+  border-top: 1.5px dashed var(--line);
+}
+
+.row-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  margin-bottom: 5px;
+}
+
+.row-line.grand {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--chili-dark);
+  margin-top: 6px;
+}
+
+.btn-checkout {
+  width: 100%;
+  background-color: var(--chili);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 11px;
+  font-weight: 700;
+  font-family: 'Work Sans', sans-serif;
+  margin-top: 10px;
+}
+
+.btn-checkout:hover {
+  background-color: var(--chili-dark);
+}
+
+.qty-btn {
+  background-color: var(--ink);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.remove-btn {
+  background-color: transparent;
+  color: var(--chili-dark);
+  border: 1px solid var(--chili-dark);
+  border-radius: 4px;
+  padding: 2px 9px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  color: white;
+}
+
+.status-Pending { background-color: var(--turmeric); color: var(--ink); }
+.status-Preparing { background-color: #5bc0de; }
+.status-OutforDelivery { background-color: var(--chili); }
+.status-Delivered { background-color: var(--herb); }
+
+.stat-box {
+  background-color: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+}
+
+.stat-box h4 {
+  font-family: 'Fraunces', serif;
+  margin-bottom: 4px;
+  color: var(--chili-dark);
+}
+
+.stat-box p {
+  margin: 0;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #7a7a75;
+  font-size: 12px;
+}
+
+.table-thumb {
+  width: 55px;
+  height: 55px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+table thead.table-dark {
+  --bs-table-bg: var(--ink);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+footer {
+  background-color: var(--ink);
+  margin-top: 50px;
+}
