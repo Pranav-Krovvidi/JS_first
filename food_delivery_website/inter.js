@@ -14,7 +14,7 @@ let menu = [
   { id: 7, name: "French Fries", price: 100, category: "Sides",
     image: "https://images.unsplash.com/photo-1576107232684-1279f390859f?w=400&q=80" },
   { id: 8, name: "Garlic Bread", price: 110, category: "Sides",
-    image: "https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=400&q=80" },
+    image: "https://images.unsplash.com/photo-1619535860434-ba1d8fa12536?w=400&q=80" },
   { id: 9, name: "Cold Coffee", price: 90, category: "Drinks",
     image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&q=80" },
   { id: 10, name: "Lemon Soda", price: 70, category: "Drinks",

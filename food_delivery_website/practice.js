@@ -6,14 +6,7 @@
 //     document.getElementById("count").textContent = count;
 // })
 
-const funcs = [];
-
-for (var i = 0; i < 3; i++) {
-    funcs.push(function () {
-        console.log(i);
-    });
-}
-
-funcs[0]();
-funcs[1]();
-funcs[2]();
+const nums = [1,2,3,4,5]
+console.log(nums.reduce((accumulator,curr)=>{
+    return accumulator+curr
+},0));
