@@ -6,12 +6,11 @@
   <title>Foodie Hub - Online Food Ordering</title>
 
 
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
 
@@ -78,10 +77,9 @@
               <div class="row-line grand"><span>Total</span><span>₹<span id="cart-total">0</span></span></div>
 
               <button
+                id="checkout-button"
                 class="btn-checkout"
-                data-bs-toggle="modal"
-                data-bs-target="#checkoutModal"
-                onclick="openCheckout()"
+                type="button"
               >
                 Proceed to Checkout
               </button>
@@ -126,11 +124,13 @@
           <form id="profile-form" onsubmit="saveProfile(event)">
             <div class="mb-3">
               <label class="form-label">Full Name</label>
-              <input type="text" class="form-control" id="profile-name" required>
+              <input type="text" class="form-control" id="profile-name" placeholder="Enter your name" required>
+              <p class="helper-text" id="profile-name-help">Please enter your full name.</p>
             </div>
             <div class="mb-3">
               <label class="form-label">Phone Number</label>
-              <input type="tel" class="form-control" id="profile-phone">
+              <input type="tel" class="form-control" id="profile-phone" placeholder="10 digit number">
+              <p class="helper-text" id="profile-phone-help">Use 10 digits only.</p>
             </div>
             <div class="mb-3">
               <label class="form-label">Email</label>
@@ -208,7 +208,7 @@
 
       <div id="admin-menu-tab" class="admin-tab-content d-none">
 
-        <button class="btn btn-primary btn-sm mb-3" data-bs-toggle="modal" data-bs-target="#menuItemModal" onclick="openAddItemForm()">
+        <button class="btn btn-primary btn-sm mb-3" onclick="openAddItemForm()">
           + Add New Item
         </button>
 
@@ -236,19 +236,21 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Checkout</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          <button type="button" class="btn-close" onclick="closeModal('checkoutModal')"></button>
         </div>
         <div class="modal-body">
           <form id="checkout-form" onsubmit="placeOrder(event)">
 
             <div class="mb-3">
               <label class="form-label">Full Name</label>
-              <input type="text" class="form-control" id="customer-name" required>
+              <input type="text" class="form-control" id="customer-name" placeholder="Enter your name" required>
+              <p class="helper-text" id="customer-name-help">Please enter your full name.</p>
             </div>
 
             <div class="mb-3">
               <label class="form-label">Phone Number</label>
-              <input type="tel" class="form-control" id="customer-phone" required>
+              <input type="tel" class="form-control" id="customer-phone" placeholder="10 digit number" required>
+              <p class="helper-text" id="customer-phone-help">Use 10 digits only.</p>
             </div>
 
             <div class="mb-3">
@@ -268,6 +270,13 @@
             <p class="fw-bold">Order Total: ₹<span id="modal-total">0</span></p>
 
             <button type="submit" class="btn btn-success w-100">Confirm Order</button>
+            <button
+                type = "button"
+                id="cancel-button"
+                class="btn btn-cncl"
+                onclick="cancelOrder(event)">
+                Cancel Order
+              </button>
           </form>
         </div>
       </div>
@@ -281,7 +290,7 @@
           <h2>✅</h2>
           <h4>Order Placed Successfully!</h4>
           <p id="order-summary-text" class="text-muted"></p>
-          <button type="button" class="btn btn-primary mt-2" data-bs-dismiss="modal">
+          <button type="button" class="btn btn-primary mt-2" onclick="closeModal('successModal')">
             Continue Browsing
           </button>
         </div>
@@ -294,7 +303,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="menu-item-modal-title">Add Menu Item</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          <button type="button" class="btn-close" onclick="closeModal('menuItemModal')"></button>
         </div>
         <div class="modal-body">
           <form id="menu-item-form" onsubmit="saveMenuItem(event)">
@@ -333,8 +342,7 @@
   </footer>
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
-
-  <script src="script.js"></script>
+  <script src="validation.js?v=2"></script>
+  <script src="inter.js?v=2"></script>
 </body>
 </html>

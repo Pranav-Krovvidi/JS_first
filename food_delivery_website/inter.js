@@ -34,6 +34,22 @@ let deliveryFee = 40;
 let profile = { name: "", phone: "", email: "", address: "" };
 let orderStatusSteps = ["Pending", "Preparing", "Out for Delivery", "Delivered"];
 
+function showModal(modalId) {
+  let modal = document.getElementById(modalId);
+  if (!modal) return;
+  modal.classList.add("open");
+  modal.style.display = "flex";
+  document.body.classList.add("modal-open");
+}
+
+function closeModal(modalId) {
+  let modal = document.getElementById(modalId);
+  if (!modal) return;
+  modal.classList.remove("open");
+  modal.style.display = "none";
+  document.body.classList.remove("modal-open");
+}
+
 function showPage(pageId, clickedButton) {
   let allPages = document.querySelectorAll(".page");
   for (let i = 0; i < allPages.length; i++) {
@@ -222,6 +238,30 @@ function openCheckout() {
   document.getElementById("customer-name").value = profile.name || "";
   document.getElementById("customer-phone").value = profile.phone || "";
   document.getElementById("customer-address").value = profile.address || "";
+  showModal("checkoutModal");
+}
+
+function bindCheckoutButton() {
+  let checkoutButton = document.getElementById("checkout-button");
+  if (!checkoutButton) return;
+
+  checkoutButton.addEventListener("click", function (event) {
+    event.preventDefault();
+    openCheckout();
+  });
+}
+
+function validateFormFields(nameInputId, phoneInputId) {
+  let name = document.getElementById(nameInputId).value.trim();
+  let phone = document.getElementById(phoneInputId).value.trim();
+  let validation = window.validateCustomerDetails ? window.validateCustomerDetails(name, phone) : { isValid: true, errors: [] };
+
+  if (!validation.isValid) {
+    alert(validation.errors[0]);
+    return false;
+  }
+
+  return true;
 }
 
 function placeOrder(event) {
@@ -232,9 +272,13 @@ function placeOrder(event) {
     return;
   }
 
-  let name = document.getElementById("customer-name").value;
-  let phone = document.getElementById("customer-phone").value;
-  let address = document.getElementById("customer-address").value;
+  if (!validateFormFields("customer-name", "customer-phone")) {
+    return;
+  }
+
+  let name = document.getElementById("customer-name").value.trim();
+  let phone = document.getElementById("customer-phone").value.trim();
+  let address = document.getElementById("customer-address").value.trim();
   let payment = document.getElementById("payment-method").value;
   let total = Number(document.getElementById("cart-total").innerHTML);
 
@@ -253,15 +297,13 @@ function placeOrder(event) {
   nextOrderId = nextOrderId + 1;
   myOrders.unshift(newOrder);
 
-  let checkoutModal = bootstrap.Modal.getInstance(document.getElementById("checkoutModal"));
-  checkoutModal.hide();
+  closeModal("checkoutModal");
 
   document.getElementById("order-summary-text").innerHTML =
     "Thanks " + name + "! Your order #" + newOrder.orderId +
     " of ₹" + total + " (" + payment + ") is on its way.";
 
-  let successModal = new bootstrap.Modal(document.getElementById("successModal"));
-  successModal.show();
+  showModal("successModal");
 
   cart = [];
   displayCart();
@@ -304,10 +346,14 @@ function displayMyOrders() {
 function saveProfile(event) {
   event.preventDefault();
 
-  profile.name = document.getElementById("profile-name").value;
-  profile.phone = document.getElementById("profile-phone").value;
-  profile.email = document.getElementById("profile-email").value;
-  profile.address = document.getElementById("profile-address").value;
+  if (!validateFormFields("profile-name", "profile-phone")) {
+    return;
+  }
+
+  profile.name = document.getElementById("profile-name").value.trim();
+  profile.phone = document.getElementById("profile-phone").value.trim();
+  profile.email = document.getElementById("profile-email").value.trim();
+  profile.address = document.getElementById("profile-address").value.trim();
 
   let savedMsg = document.getElementById("profile-saved-msg");
   savedMsg.classList.remove("d-none");
@@ -389,6 +435,7 @@ function openAddItemForm() {
   document.getElementById("menu-item-modal-title").innerHTML = "Add Menu Item";
   document.getElementById("menu-item-form").reset();
   document.getElementById("item-id").value = "";
+  showModal("menuItemModal");
 }
 
 function openEditItemForm(itemId) {
@@ -401,8 +448,7 @@ function openEditItemForm(itemId) {
   document.getElementById("item-price").value = item.price;
   document.getElementById("item-image").value = item.image;
 
-  let modal = new bootstrap.Modal(document.getElementById("menuItemModal"));
-  modal.show();
+  showModal("menuItemModal");
 }
 
 function saveMenuItem(event) {
@@ -431,8 +477,7 @@ function saveMenuItem(event) {
     nextItemId = nextItemId + 1;
   }
 
-  let modal = bootstrap.Modal.getInstance(document.getElementById("menuItemModal"));
-  modal.hide();
+  closeModal("menuItemModal");
 
   displayAdminMenu();
   displayCategoryButtons();
@@ -485,14 +530,41 @@ function showAdminTab(tabId, clickedButton) {
   clickedButton.classList.add("btn-dark");
 }
 
+function cancelOrder() {
+
+    if (!confirm("Are you sure you want to cancel checkout?")) {
+        return;
+    }
+
+
+    closeModal("checkoutModal");
+
+    document.querySelectorAll(".page").forEach(function(page) {
+        page.classList.add("d-none");
+    });
+
+    document.getElementById("menu-page").classList.remove("d-none");
+
+    document.querySelectorAll(".nav-btn").forEach(function(btn) {
+        btn.classList.remove("active");
+    });
+
+    document.querySelector(".nav-btn").classList.add("active");
+
+    displayCart();
+}
+
 
 displayCategoryButtons();
 displayMenu();
 displayCart();
+bindCheckoutButton();
 
 // Expose functions to global `window` so inline handlers work after bundling
 if (typeof window !== 'undefined') {
   Object.assign(window, {
+    showModal,
+    closeModal,
     showPage,
     displayCategoryButtons,
     filterCategory,
@@ -514,7 +586,7 @@ if (typeof window !== 'undefined') {
     saveMenuItem,
     deleteMenuItem,
     updateAdminStats,
-    showAdminTab
+    showAdminTab,
+    cancelOrder
   });
 }
-
