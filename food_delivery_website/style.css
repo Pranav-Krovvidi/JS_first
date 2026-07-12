@@ -680,3 +680,8 @@ footer {
   background-color: var(--ink);
   margin-top: 50px;
 }
+
+.admin-tab {
+    position: relative;
+    top: 3px;
+}

@@ -554,6 +554,21 @@ function cancelOrder() {
     displayCart();
 }
 
+function authenticateAdmin(event){
+  event.preventDefault();
+
+  const username = document.getElementById("admin-username").value.trim();
+  const password = document.getElementById("admin-password").value.trim();
+
+  if(username === 'admin' && password === 'admin@123'){
+    const adminBtn = document.querySelector(".nav-btn[onclick*='admin-page']");
+    showPage('admin-page', adminBtn);
+  }
+  else{
+    alert("Invalid credentials! Please try again.");
+  }
+}
+
 
 displayCategoryButtons();
 displayMenu();
@@ -587,6 +602,6 @@ if (typeof window !== 'undefined') {
     deleteMenuItem,
     updateAdminStats,
     showAdminTab,
-    cancelOrder
+    cancelOrder,
   });
 }

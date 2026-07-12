@@ -22,7 +22,7 @@
         <button class="btn btn-sm nav-btn active" onclick="showPage('menu-page', this)">Menu</button>
         <button class="btn btn-sm nav-btn" onclick="showPage('orders-page', this)">My Orders</button>
         <button class="btn btn-sm nav-btn" onclick="showPage('profile-page', this)">Profile</button>
-        <button class="btn btn-sm nav-btn" onclick="showPage('admin-page', this)">Admin</button>
+        <button class="btn btn-sm nav-btn" onclick="showPage('admin-login-page', this)">Admin</button>
         <span class="cart-indicator ms-2">
            <span id="cart-count">0</span>
         </span>
@@ -148,6 +148,27 @@
     </div>
   </div>
 
+  <div id="admin-login-page" class="page d-none">
+    <div class="container my-4" style="max-width:500px;">
+      <h2>Admin Login</h2>
+      <div class="card">
+        <div class="card-body">
+          <form id="admin-login-form">
+            <div class="mb-3">
+              <label class="form-label">Username</label>
+              <input type="text" class="form-control" id="admin-username" placeholder="Enter username(admin)" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input type="password" class="form-control" id="admin-password" placeholder="Enter password(admin@123)" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100" onclick="authenticateAdmin(event)">Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div id="admin-page" class="page d-none">
     <div class="container my-4">
       <h2>Admin Dashboard</h2>
@@ -182,8 +203,8 @@
 
 
       <div class="mb-3">
-        <button class="btn btn-dark btn-sm admin-tab active" onclick="showAdminTab('admin-orders-tab', this)">Manage Orders</button>
-        <button class="btn btn-outline-dark btn-sm admin-tab" onclick="showAdminTab('admin-menu-tab', this)">Manage Menu</button>
+        <button class="btn btn-dark btn-sm admin-tab active" id="manage-orders-btn-admin"onclick="showAdminTab('admin-orders-tab', this)">Manage Orders</button>
+        <button class="btn btn-outline-dark btn-sm admin-tab" id="manage-menu-btn-admin" onclick="showAdminTab('admin-menu-tab', this)">Manage Menu</button>
       </div>
 
 
