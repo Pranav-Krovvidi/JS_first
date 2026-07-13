@@ -642,13 +642,13 @@ h1, h2, h3, h4, h5, .section-title {
   background-color: var(--paper);
   border: 1px solid var(--line);
   border-radius: 12px;
-  padding: 18px;
+  padding: 12px;
   text-align: center;
 }
 
 .stat-box h4 {
   font-family: 'Fraunces', serif;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
   color: var(--chili-dark);
 }
 
@@ -658,7 +658,18 @@ h1, h2, h3, h4, h5, .section-title {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: #7a7a75;
-  font-size: 12px;
+  font-size: 11px;
+}
+
+#admin-page .row.g-3 {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 12px;
+}
+
+#admin-page .col-md-3 {
+    flex: 1;
+    max-width: none;
 }
 
 .table-thumb {
